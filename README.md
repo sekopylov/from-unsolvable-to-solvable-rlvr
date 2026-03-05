@@ -1,6 +1,6 @@
-# solve-hard-problems
+# From unsolvable to solvable rlvr
 
-This repo contains my compact pipeline for building hard math tasks with useful hints and running RLVR (GRPO) on them.
+This repo contains my compact setup for training on hard OpenMathReasoning tasks and checking whether hint-based training transfers to no-hint solving.
 
 ## 1) Dataset source and initial filtering
 - Initial data source: https://huggingface.co/datasets/nvidia/OpenMathReasoning.
@@ -47,6 +47,36 @@ Goal of this pair: compare transfer from hint-augmented RLVR vs pure no-hint tra
 ## Research goal
 The main question in this project is whether adding hint-augmented tasks during RLVR can help the model solve harder tasks **without** hints, i.e. whether this training creates useful generalization instead of only overfitting to hint format.
 
+## Data layout
+- `data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/summary.json`
+  - final pipeline counters (`1359` baseline-hard, `297` final hint-helped).
+- `data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/with_hint_eval.jsonl`
+  - per-task eval results for `problem + hint` stage.
+- `data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/final_tasks_with_hints_avg4_mid.jsonl`
+  - final 297 tasks used for RLVR data build.
+- `data/rlvr_hints_onpolicy_grpo_v1/{train.parquet,val.parquet,stats.json}`
+  - dataset for mixed (hint + no-hint) training.
+- `data/rlvr_nohint_onpolicy_grpo_v1/{train.parquet,val.parquet,stats.json,stats_nohint_same.json}`
+  - dataset for no-hint control training.
+
+## How to run trainings
+1. Prepare pinned `verl` clone:
+```bash
+bash scripts/setup_verl.sh
+```
+
+2. Start main RLVR run (GPUs 0,1,2,3):
+```bash
+bash scripts/run_grpo_rlvr_qwen3_1p7b_no_think_gpu0123.sh
+```
+
+3. Start no-hint control RLVR run (GPUs 4,5,6,7):
+```bash
+bash scripts/run_grpo_rlvr_qwen3_1p7b_no_think_gpu4567_nohint.sh
+```
+
+Both launchers use the same reward interface (`scripts/reward_verl_wrapper.py` -> `scripts/reward_utils.py`) and write TensorBoard events under `runs/*/tensorboard`.
+
 ## Repro dependency (verl)
 `verl-main` is intentionally not tracked in git. Use:
 
@@ -55,3 +85,8 @@ bash scripts/setup_verl.sh
 ```
 
 Pinned version is stored in `VERL_PIN.txt`.
+
+## Privacy / repository scope
+I intentionally did not publish raw logs, worker configs, temporary caches, full generation dumps, and other infra-specific artifacts. This is for privacy/safety reasons (machine/user/internal path details) and to keep this repo lightweight.
+
+Also, part of the large-scale inference and hint generation orchestration was executed in a separate working project/environment. Here I attach the core final artifacts needed to reproduce the RLVR stage and understand the experiment decisions.
