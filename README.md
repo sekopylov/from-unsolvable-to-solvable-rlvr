@@ -90,3 +90,18 @@ Pinned version is stored in `VERL_PIN.txt`.
 I intentionally did not publish raw logs, worker configs, temporary caches, full generation dumps, and other infra-specific artifacts. This is for privacy/safety reasons (machine/user/internal path details) and to keep this repo lightweight.
 
 Also, part of the large-scale inference and hint generation orchestration was executed in a separate working project/environment. Here I attach the core final artifacts needed to reproduce the RLVR stage and understand the experiment decisions.
+
+## Ongoing training status
+Training is still running and will continue overnight.
+
+Current TensorBoard snapshots:
+
+- Control experiment (no hints in train):
+
+![Control experiment](assets/screenshots/control_nohint_tensorboard.png)
+
+- Main experiment (train includes hint-augmented tasks):
+
+![Hint-augmented experiment](assets/screenshots/hints_pipeline_tensorboard.png)
+
+Working expectation: by the end of training, the run with hints should reach higher mean validation accuracy on the no-hint hard set than the pure no-hint control run.

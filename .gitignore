@@ -41,3 +41,7 @@ runs/**
 !runs/*/
 !runs/*/tensorboard/
 !runs/*/tensorboard/**
+
+# Keep documentation assets
+!assets/
+!assets/**
