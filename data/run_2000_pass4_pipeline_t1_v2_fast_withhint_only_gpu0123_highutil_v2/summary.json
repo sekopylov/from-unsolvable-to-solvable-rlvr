@@ -1,0 +1,19 @@
+{
+  "with_hint_input_count": 1359,
+  "with_hint_eval_count": 1359,
+  "final_avg4_mid_count": 297,
+  "gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n": 4,
+  "temperature": 1.0,
+  "max_tokens": 4096,
+  "batch_size": 48,
+  "max_num_seqs": 48,
+  "gpu_memory_utilization": 0.92,
+  "enforce_eager": false,
+  "output": "/home/seankopylov/projects/solve-hard-problems/data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/final_tasks_with_hints_avg4_mid.jsonl"
+}

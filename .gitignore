@@ -1,0 +1,43 @@
+# OS / Python
+.DS_Store
+*.swp
+*.swo
+*.tmp
+*.log
+**/__pycache__/
+*.pyc
+
+# Local caches and temp
+.cache/
+logs/
+
+# Large dependency clone (pin via script)
+verl-main/
+
+# Keep only selected artifacts from data/
+data/*
+
+!data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/
+data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/*
+!data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/summary.json
+!data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/with_hint_eval.jsonl
+
+!data/rlvr_hints_onpolicy_grpo_v1/
+data/rlvr_hints_onpolicy_grpo_v1/*
+!data/rlvr_hints_onpolicy_grpo_v1/stats.json
+!data/rlvr_hints_onpolicy_grpo_v1/train.parquet
+!data/rlvr_hints_onpolicy_grpo_v1/val.parquet
+
+!data/rlvr_nohint_onpolicy_grpo_v1/
+data/rlvr_nohint_onpolicy_grpo_v1/*
+!data/rlvr_nohint_onpolicy_grpo_v1/stats.json
+!data/rlvr_nohint_onpolicy_grpo_v1/stats_nohint_same.json
+!data/rlvr_nohint_onpolicy_grpo_v1/train.parquet
+!data/rlvr_nohint_onpolicy_grpo_v1/val.parquet
+
+# Keep only TensorBoard logs from runs/
+runs/**
+!runs/
+!runs/*/
+!runs/*/tensorboard/
+!runs/*/tensorboard/**

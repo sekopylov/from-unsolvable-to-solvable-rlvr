@@ -1,0 +1,5 @@
+{
+  "train_rows": 297,
+  "val_rows": 297,
+  "train_equals_val": true
+}

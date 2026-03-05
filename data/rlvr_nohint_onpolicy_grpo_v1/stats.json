@@ -1,0 +1,8 @@
+{
+  "input_rows": 297,
+  "skipped": 0,
+  "train_rows": 594,
+  "val_rows": 297,
+  "train_parquet": "/home/seankopylov/projects/solve-hard-problems/data/rlvr_nohint_onpolicy_grpo_v1/train.parquet",
+  "val_parquet": "/home/seankopylov/projects/solve-hard-problems/data/rlvr_nohint_onpolicy_grpo_v1/val.parquet"
+}
