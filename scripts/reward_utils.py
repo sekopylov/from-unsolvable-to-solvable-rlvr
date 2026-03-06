@@ -168,6 +168,10 @@ def compute_reward(gt_answer, gen_trajectory):
 
     gt_answer = str(gt_answer)
     predicted_answer = str(predicted_answer)
+
+    # Guard pathological long expressions that can hang symbolic parsing.
+    if len(gt_answer) > 256 or len(predicted_answer) > 256:
+        return False
     result = math_equal(gt_answer, predicted_answer, simple_additional_normalization)
     if not result:
         replace_symbols = ["ln", "log", "°", "circ"]

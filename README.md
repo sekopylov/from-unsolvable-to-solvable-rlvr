@@ -47,6 +47,12 @@ Goal of this pair: compare transfer from hint-augmented RLVR vs pure no-hint tra
 ## Research goal
 The main question in this project is whether adding hint-augmented tasks during RLVR can help the model solve harder tasks **without** hints, i.e. whether this training creates useful generalization instead of only overfitting to hint format.
 
+## Verifier
+The verifier logic is based on NVIDIA NeMo Skills math grader:
+https://github.com/NVIDIA-NeMo/Skills/blob/main/nemo_skills/evaluation/math_grader.py
+
+I tried many verifier variants in a separate math-task project, and this variant was the most reliable across most math tasks (excluding LLM-as-judge setups).
+
 ## Data layout
 - `data/run_2000_pass4_pipeline_t1_v2_fast_withhint_only_gpu0123_highutil_v2/summary.json`
   - final pipeline counters (`1359` baseline-hard, `297` final hint-helped).
@@ -92,16 +98,19 @@ I intentionally did not publish raw logs, worker configs, temporary caches, full
 Also, part of the large-scale inference and hint generation orchestration was executed in a separate working project/environment. Here I attach the core final artifacts needed to reproduce the RLVR stage and understand the experiment decisions.
 
 ## Ongoing training status
-Training is still running and will continue overnight.
+Training is currently paused. Right now I do not have enough compute resources to continue these long runs.
 
-Current TensorBoard snapshots:
-
-- Control experiment (no hints in train):
-
-![Control experiment](assets/screenshots/control_nohint_tensorboard.png)
+Latest TensorBoard snapshots from the last run state:
 
 - Main experiment (train includes hint-augmented tasks):
 
-![Hint-augmented experiment](assets/screenshots/hints_pipeline_tensorboard.png)
+![Hint-augmented experiment](assets/screenshots/hints_latest_tensorboard.png)
 
-Working expectation: by the end of training, the run with hints should reach higher mean validation accuracy on the no-hint hard set than the pure no-hint control run.
+- Control experiment (train without hints):
+
+![Control experiment](assets/screenshots/nohint_latest_tensorboard.png)
+
+Current reading from available checkpoints: we do **not** yet see reliable generalization from hint-augmented training to solving hard no-hint problems, and hints do not yet reliably improve hard no-hint solving.
+
+More training is still needed before making a final conclusion. I plan to resume these runs later to properly check the idea.
+
